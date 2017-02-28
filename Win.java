@@ -50,11 +50,13 @@ public class Win extends JFrame {
         jtf2.setEditable(false);
 
         ButtonGroup[] buttonGroups = new ButtonGroup[NUM_BTN_GRPS];
+        boolean defaultStatus;
         for (int i = 0; i < NUM_BTN_GRPS; i++) {
             buttonGroups[i] = new ButtonGroup();
             JRadioButton[] jrb = new JRadioButton[4];
             for (int j = 0; j < NUM_RADIO_BTNS; j++) {
-                jrb[j] = new JRadioButton(TYPES[j]);
+                defaultStatus = (i==0 && j==0) || (i==NUM_BTN_GRPS - 1 && j==NUM_RADIO_BTNS - 1);
+                jrb[j] = new JRadioButton(TYPES[j],defaultStatus);
                 buttonGroups[i].add(jrb[j]);
                 jp[2+i].add(jrb[j]);
             }
@@ -87,11 +89,12 @@ public class Win extends JFrame {
         };
         System.out.println("Original String value is: " + bin);
 
-        //For some reason there is an error when getting Integer from jtfValue
+        StringBuilder hex = new StringBuilder();
+        //!!! TO DO: If setLength(10000) is not done -->>>
+        // StringIndexOutOfBoundsException: String index out of range: __
+        hex.setLength(10000);
 
-        StringBuilder hex = new StringBuilder(10000);
-
-        for (int i = 7; i >= 0 ; i--) {
+        for (int i = 7; i > 0 ; i--) {
             int j = bin & HALF_BYTE;
             hex.setCharAt(i,HEX_DIGITS[j]);
             bin >>= SHIFT_SIZE;
