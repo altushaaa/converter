@@ -65,7 +65,7 @@ public class Win extends JFrame {
         btnConvert.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String jtfValue = jtf.getText();
+                int jtfValue = Integer.parseInt(jtf.getText());
                 String rdbtnFrom = buttonGroups[0].getSelection().toString();
                 String rdbtnTo = buttonGroups[1].getSelection().toString();
                 jtf2.setText(convert(jtfValue, rdbtnFrom, rdbtnTo));
@@ -76,7 +76,7 @@ public class Win extends JFrame {
         setVisible(true);
     }
 
-    private static String convert(String jtfValue,String rdbtnFrom, String rdbtnTo) {
+    private static String convert(int bin,String rdbtnFrom, String rdbtnTo) {
 
         //!!! TO DO: use switch to implement all different conversion options using radio buttons
         final int SHIFT_SIZE = 4;
@@ -85,14 +85,13 @@ public class Win extends JFrame {
                 '0', '1', '2', '3', '4', '5', '6', '7',
                 '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
         };
-        System.out.println("Original String value is: " + jtfValue);
+        System.out.println("Original String value is: " + bin);
 
         //For some reason there is an error when getting Integer from jtfValue
-        int bin = Integer.getInteger(jtfValue);
 
-        StringBuilder hex = new StringBuilder();
+        StringBuilder hex = new StringBuilder(10000);
 
-        for (int i = 7; i >= 0 ; i=-4) {
+        for (int i = 7; i >= 0 ; i--) {
             int j = bin & HALF_BYTE;
             hex.setCharAt(i,HEX_DIGITS[j]);
             bin >>= SHIFT_SIZE;
